@@ -2,106 +2,86 @@ import React, { useState } from 'react';
 
 const XavierVault = () => {
   const [activeCourse, setActiveCourse] = useState('home');
-  const [searchTerm, setSearchTerm] = useState('');
   
-  const [quota, setQuota] = useState(100000);
-  const [avgSale, setAvgSale] = useState(5000);
-  const [closeRate, setCloseRate] = useState(20);
-
-  const courses = {
-    mktg302: {
-      title: "MKTG 302: Marketing Research",
-      modules: ["Qualitative Laddering", "Causal Research", "Sampling Errors"],
-      redsProject: {
-        focus: "Cincinnati Reds Data Interpretation",
-        details: "Focus on Descriptive Statistics and Cross-Tabulation to identify fan behavior patterns.",
-        keyTerms: ["Frequency Distribution", "Data Cleaning", "Outlier Identification"]
-      },
-      flashcards: [
-        { q: "What is Cross-Tabulation?", a: "Analyzing the relationship between two variables (e.g., Age vs. Ticket Type)." },
-        { q: "What is an Outlier in Reds data?", a: "Data points that are significantly different from the rest." }
-      ]
-    },
-    sales: {
-      title: "Sales Management",
-      modules: ["Territory Management", "Sports Sales", "Persuasive Questioning"],
-      flashcards: [
-        { q: "What is the 450 Sales Question approach?", a: "Leading prospects to their own conclusions." },
-        { q: "What is Sales Quota?", a: "A performance goal assigned to a marketing unit or salesperson." }
-      ]
-    }
+  // Style Objects for "Guaranteed" Modern Look
+  const glassStyle = {
+    background: 'rgba(255, 255, 255, 0.7)',
+    backdropFilter: 'blur(10px)',
+    borderRadius: '24px',
+    border: '1px solid rgba(255, 255, 255, 0.3)',
+    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.15)'
   };
 
-  const neededLeads = Math.round((quota / avgSale) / (closeRate / 100));
+  const gradientHeader = {
+    background: 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #3b82f6 100%)',
+    boxShadow: '0 10px 30px -10px rgba(79, 70, 229, 0.5)'
+  };
 
   return (
-    <div className="min-h-screen bg-[#f0f4ff] font-sans text-slate-900">
-      <nav className="p-8 bg-gradient-to-r from-[#9333ea] to-[#60a5fa] text-white shadow-xl">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-          <h1 className="font-black text-3xl tracking-tighter cursor-pointer" onClick={() => setActiveCourse('home')}>XAVIER ARCHIVE</h1>
-          <input 
-            type="text" 
-            placeholder="Search lectures..." 
-            className="p-3 rounded-full w-full max-w-md text-slate-900 outline-none shadow-inner"
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
+    <div style={{ backgroundColor: '#f8fafc', minHeight: '100vh', fontFamily: 'sans-serif' }}>
+      {/* Animated Glowing Header */}
+      <nav style={gradientHeader} className="p-10 text-white text-center">
+        <h1 style={{ letterSpacing: '-2px', fontWeight: '900' }} className="text-4xl italic">
+          XAVIER ARCHIVE
+        </h1>
+        <p className="mt-2 opacity-80 font-medium">Digital Vault & Lecture Repository</p>
       </nav>
 
-      <main className="p-10 max-w-6xl mx-auto">
+      <main className="max-w-5xl mx-auto p-8">
         {activeCourse === 'home' ? (
-          <div className="grid md:grid-cols-2 gap-8">
-            <div onClick={() => setActiveCourse('mktg302')} className="bg-white p-10 rounded-3xl shadow-lg border-b-8 border-[#60a5fa] cursor-pointer hover:scale-105 transition-transform">
-              <h3 className="text-2xl font-black text-[#9333ea]">MKTG 302: REDS DATA</h3>
-              <p className="mt-2 text-slate-500">Market Research & Interpretation</p>
+          <div className="grid md:grid-cols-2 gap-8 mt-10">
+            {/* MKTG Card */}
+            <div 
+              onClick={() => setActiveCourse('mktg')}
+              style={glassStyle} 
+              className="p-10 cursor-pointer hover:scale-105 transition-all group"
+            >
+              <div className="h-2 w-20 bg-blue-500 mb-4 rounded-full"></div>
+              <h3 className="text-2xl font-black text-slate-800">MKTG 302</h3>
+              <p className="text-slate-500 font-medium mt-2">Reds Research & Data Analytics</p>
+              <div className="mt-6 text-blue-600 font-bold group-hover:translate-x-2 transition-transform">Open Vault →</div>
             </div>
-            <div onClick={() => setActiveCourse('sales')} className="bg-white p-10 rounded-3xl shadow-lg border-b-8 border-[#9333ea] cursor-pointer hover:scale-105 transition-transform">
-              <h3 className="text-2xl font-black text-[#60a5fa]">SALES CALCULATOR</h3>
-              <p className="mt-2 text-slate-500">Management & Quota Planning</p>
+
+            {/* Sales Card */}
+            <div 
+              onClick={() => setActiveCourse('sales')}
+              style={glassStyle} 
+              className="p-10 cursor-pointer hover:scale-105 transition-all group"
+            >
+              <div className="h-2 w-20 bg-purple-500 mb-4 rounded-full"></div>
+              <h3 className="text-2xl font-black text-slate-800">SALES MGMT</h3>
+              <p className="text-slate-500 font-medium mt-2">Management & Funnel Strategy</p>
+              <div className="mt-6 text-purple-600 font-bold group-hover:translate-x-2 transition-transform">Open Vault →</div>
             </div>
           </div>
         ) : (
-          <div className="animate-in slide-in-from-right-4 duration-500">
-            <button onClick={() => setActiveCourse('home')} className="mb-6 text-[#9333ea] font-bold">← Dashboard</button>
+          <div className="mt-6">
+            <button 
+              onClick={() => setActiveCourse('home')}
+              className="mb-8 px-6 py-2 bg-slate-200 rounded-full font-bold text-slate-600 hover:bg-slate-300 transition-colors"
+            >
+              ← Back to Dashboard
+            </button>
             
-            {activeCourse === 'mktg302' && (
-              <div>
-                <h2 className="text-5xl font-black text-[#9333ea] mb-6">Marketing Research</h2>
-                <div className="bg-[#f5f3ff] p-8 rounded-3xl border-2 border-[#ddd6fe] mb-8">
-                  <h3 className="text-[#7c3aed] font-black uppercase mb-4">{courses.mktg302.redsProject.focus}</h3>
-                  <p className="text-slate-700 mb-4 font-medium">{courses.mktg302.redsProject.details}</p>
-                  <div className="flex gap-2">
-                    {courses.mktg302.redsProject.keyTerms.map(term => (
-                      <span key={term} className="bg-[#ede9fe] text-[#7c3aed] text-xs font-bold px-3 py-1 rounded-full">{term}</span>
-                    ))}
-                  </div>
-                </div>
+            <div style={glassStyle} className="p-12">
+              <h2 className="text-4xl font-black mb-4">
+                {activeCourse === 'mktg' ? 'Marketing Research' : 'Sales Management'}
+              </h2>
+              <div className="h-1 w-full bg-slate-100 mb-8"></div>
+              
+              <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl">
+                <p className="font-bold text-blue-800 uppercase tracking-widest text-sm">Lecture Repository Active</p>
+                <p className="text-slate-600 mt-1">Accessing encrypted coursework for Spring 2026...</p>
               </div>
-            )}
 
-            {activeCourse === 'sales' && (
-              <div className="bg-gradient-to-br from-[#9333ea] to-[#60a5fa] text-white p-10 rounded-3xl shadow-2xl mb-10">
-                <h2 className="text-3xl font-black mb-6 uppercase tracking-tight">Sales Funnel Calculator</h2>
-                <div className="grid md:grid-cols-3 gap-8">
-                  <div>
-                    <label className="block text-xs font-bold text-blue-100 mb-2">QUOTA GOAL ($)</label>
-                    <input type="number" value={quota} onChange={(e) => setQuota(e.target.value)} className="w-full p-2 rounded bg-white/20 text-white outline-none border border-white/30" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-blue-100 mb-2">AVG SALE SIZE ($)</label>
-                    <input type="number" value={avgSale} onChange={(e) => setAvgSale(e.target.value)} className="w-full p-2 rounded bg-white/20 text-white outline-none border border-white/30" />
-                  </div>
-                  <div>
-                    <label className="block text-xs font-bold text-blue-100 mb-2">CLOSE RATE (%)</label>
-                    <input type="number" value={closeRate} onChange={(e) => setCloseRate(e.target.value)} className="w-full p-2 rounded bg-white/20 text-white outline-none border border-white/30" />
-                  </div>
-                </div>
-                <div className="mt-10 p-6 bg-white text-[#9333ea] rounded-2xl text-center">
-                  <p className="text-sm font-bold opacity-70">LEADS REQUIRED TO HIT GOAL</p>
-                  <p className="text-6xl font-black">{neededLeads}</p>
-                </div>
+              {/* DOWNLOAD BUTTONS (This links to your PowerPoints!) */}
+              <div className="mt-10 grid gap-4">
+                <button className="p-4 border-2 border-slate-100 rounded-xl text-left hover:bg-slate-50 transition-colors flex justify-between items-center">
+                  <span className="font-bold">Latest Lecture PPTX</span>
+                  <span className="text-xs bg-slate-200 px-2 py-1 rounded text-slate-500">READY</span>
+                </button>
               </div>
-            )}
+            </div>
           </div>
         )}
       </main>
